@@ -258,7 +258,7 @@ export const translations = {
       shop: 'متجر',
     },
   },
-} as const
+}
 
 export type Language = 'en' | 'ar'
 export type Translations = typeof translations.en

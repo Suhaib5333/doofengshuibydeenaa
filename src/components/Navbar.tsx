@@ -23,7 +23,7 @@ const BahrainFlag = () => (
 )
 
 export default function Navbar() {
-  const { lang, t, toggleLanguage: toggleLang, isRTL } = useLanguage()
+  const { lang, t, toggleLanguage: toggleLang } = useLanguage()
 
   const [scrolled,      setScrolled]      = useState(false)
   const [mobileOpen,    setMobileOpen]    = useState(false)
