@@ -81,6 +81,12 @@ This is a full revamp of an existing Feng Shui platform owned by Deena in Bahrai
 - **Combine tools freely** when it produces a better result (e.g., GSAP + Lenis + Spline together)
 - If a tool is not set up, **stop and prompt the user** with the exact install command before continuing
 
+### Mandatory Skills & MCP Usage (EVERY Session)
+> **CRITICAL**: At the start of EVERY conversation involving UI/frontend work, you MUST:
+> 1. **Activate the `frontend-design` skill** — invoke it before writing any UI code. It enforces premium design standards: distinctive typography, bold aesthetic direction, intentional color use, and production-grade polish. Never build generic/plain UI.
+> 2. **Activate the `context7-mcp` skill** — invoke it before writing code that uses any library/framework (GSAP, React, Tailwind, Lenis, etc.). Always resolve the library ID and query docs for current API patterns instead of relying on training data.
+> 3. **Use `@gsap/react` `useGSAP()` hook** — prefer `useGSAP()` over raw `useEffect` + `gsap.context()` for all GSAP animations. It handles cleanup automatically and works properly with React strict mode. Install: `bun add @gsap/react`.
+
 ## Brand & Design System
 
 ### Logo
@@ -114,6 +120,52 @@ background: linear-gradient(to bottom, #9CBF1B, #36ABD9);
 - Gold accents for premium/luxury feel (consultation pricing)
 - Green-to-teal gradient is the strongest brand element after the logo
 - Clean, spacious layouts with soft backgrounds
+
+## Layout Rules (CRITICAL)
+- **Full width always** — NO `max-w-*` containers anywhere on the site. Every section, navbar, footer, and page element must span the full viewport width. Use horizontal padding for breathing room, never width caps.
+- This applies to: navbar, all page sections, footer, admin pages, every layout wrapper
+- Individual text elements and card grids CAN use `max-w-*` for readability — only layout wrappers are full width.
+
+## Responsive Design Rules (MANDATORY)
+> **CRITICAL**: Every component and section MUST be optimized for all device sizes. Mobile-first approach with progressive enhancement. Never build desktop-only UI.
+
+### Horizontal Padding Scale
+Use this responsive padding on ALL content wrappers:
+```
+px-6 sm:px-8 md:px-12 lg:px-14 xl:px-20
+```
+- `px-6` (24px) — mobile baseline, keeps content away from screen edges
+- `sm:px-8` (32px) — small tablets and larger phones
+- `md:px-12` (48px) — tablets
+- `lg:px-14` / `xl:px-20` — desktop
+
+### Typography Scale
+Always scale font sizes progressively. Never use a single large size across all breakpoints:
+```
+Headings:  text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl
+Subtitles: text-sm sm:text-base md:text-lg lg:text-xl
+Body:      text-sm sm:text-base
+Labels:    text-[8px] sm:text-[10px] lg:text-[11px]
+```
+
+### Spacing Between Sections
+Use `clamp()` for fluid spacing that adapts without breakpoints:
+```
+marginBottom: clamp(min, preferred-vw, max)
+```
+Example: `clamp(2.5rem, 5vw, 4.5rem)` — 40px on mobile, grows to 72px on desktop.
+
+### Mobile-Specific Rules
+- **Viewport height**: Use `100dvh` (dynamic viewport height) not `100vh` — accounts for mobile browser chrome
+- **Buttons**: Must be `w-full sm:w-auto` — full width on mobile, auto on desktop
+- **Cards/grids**: Reduce internal padding on mobile (`px-2 sm:px-5 lg:px-6`, `py-4 sm:py-6 lg:py-7`)
+- **Stat cards, feature cards**: Keep grid columns but shrink padding and font sizes rather than stacking
+- **Touch targets**: Minimum 44×44px tap targets on all interactive elements
+- **Flex layouts**: Use `flex-col sm:flex-row` for button groups and horizontal layouts
+- **Border radius**: Scale down on mobile (`rounded-xl sm:rounded-2xl`)
+- **Icon sizes**: Scale with breakpoints (`w-4 h-4 sm:w-5 sm:h-5`)
+- **Emblem/logo sizes**: Scale with breakpoints, smaller on mobile to save vertical space
+- **Content padding top**: Add `py-28 sm:py-32 lg:py-0` on hero-type sections to account for navbar + safe area
 
 ## Code Conventions
 - Use TypeScript strict mode — no `any`
